@@ -1,28 +1,53 @@
 package com.example.jobapp.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
-
 import com.example.jobapp.model.JobApplication;
 import com.example.jobapp.service.ApplicationService;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
-import java.util.List;
+import java.io.File;
 
-@CrossOrigin(origins = "http://localhost:5173")
 @RestController
-@RequestMapping("/api/applications")   // group endpoints under /api/applications
+@RequestMapping("/api/applications")
+@CrossOrigin(origins = "http://localhost:5173")
 public class ApplicationController {
 
-    @Autowired
-    private ApplicationService applicationService;
+    private final ApplicationService applicationService;
 
-    @PostMapping("/apply")
-    public String apply(@RequestBody JobApplication application) {
-        return applicationService.apply(application);
+    public ApplicationController(ApplicationService applicationService) {
+        this.applicationService = applicationService;
+    }
+
+    @PostMapping(consumes = {"multipart/form-data"})
+    public String apply(
+            @RequestPart("application") JobApplication application,
+            @RequestPart("resumeFile") MultipartFile resumeFile) {
+
+        try {
+            // ✅ Create folder if it doesn’t exist
+            String uploadDir = "C:/jobapp_uploads/";
+            File dir = new File(uploadDir);
+            if (!dir.exists()) dir.mkdirs();
+
+            // ✅ Save uploaded file
+            String filePath = uploadDir + resumeFile.getOriginalFilename();
+            resumeFile.transferTo(new File(filePath));
+
+            // ✅ Store file path + status
+            application.setResumeLink(filePath);
+            application.setStatus("Applied");
+
+            // ✅ Save to database
+            applicationService.apply(application);
+            return "Application submitted successfully!";
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "Error while submitting application!";
+        }
     }
 
     @GetMapping
-    public List<JobApplication> getApplications() {
+    public java.util.List<JobApplication> getApplications() {
         return applicationService.getApplications();
     }
 }

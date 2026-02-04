@@ -9,47 +9,51 @@ import jakarta.persistence.Id;
 public class JobApplication {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY) // auto-increment primary key
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int applicationId;
 
-    private int studentId;
     private int jobId;
+
+    // 🔥 Personal Details
+    private String fullName;
+    private String email;
+    private String phone;
+    private String college;
+    private String degree;
+
+    private String resumeLink;
     private String message;
+
     private String status;
 
-    // --- Getters and Setters ---
-    public int getApplicationId() {
-        return applicationId;
-    }
-    public void setApplicationId(int applicationId) {
-        this.applicationId = applicationId;
-    }
+    // getters & setters
+    public int getApplicationId() { return applicationId; }
+    public void setApplicationId(int applicationId) { this.applicationId = applicationId; }
 
-    public int getStudentId() {
-        return studentId;
-    }
-    public void setStudentId(int studentId) {
-        this.studentId = studentId;
-    }
+    public int getJobId() { return jobId; }
+    public void setJobId(int jobId) { this.jobId = jobId; }
 
-    public int getJobId() {
-        return jobId;
-    }
-    public void setJobId(int jobId) {
-        this.jobId = jobId;
-    }
+    public String getFullName() { return fullName; }
+    public void setFullName(String fullName) { this.fullName = fullName; }
 
-    public String getMessage() {
-        return message;
-    }
-    public void setMessage(String message) {
-        this.message = message;
-    }
+    public String getEmail() { return email; }
+    public void setEmail(String email) { this.email = email; }
 
-    public String getStatus() {
-        return status;
-    }
-    public void setStatus(String status) {
-        this.status = status;
-    }
+    public String getPhone() { return phone; }
+    public void setPhone(String phone) { this.phone = phone; }
+
+    public String getCollege() { return college; }
+    public void setCollege(String college) { this.college = college; }
+
+    public String getDegree() { return degree; }
+    public void setDegree(String degree) { this.degree = degree; }
+
+    public String getResumeLink() { return resumeLink; }
+    public void setResumeLink(String resumeLink) { this.resumeLink = resumeLink; }
+
+    public String getMessage() { return message; }
+    public void setMessage(String message) { this.message = message; }
+
+    public String getStatus() { return status; }
+    public void setStatus(String status) { this.status = status; }
 }

@@ -1,13 +1,14 @@
 package com.example.jobapp.controller;
 
-import com.example.jobapp.model.Job;   // ✅ THIS FIXES IT
+import com.example.jobapp.model.Job;
 import com.example.jobapp.service.JobService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/jobs")
+@RequestMapping("/api/jobs")
+@CrossOrigin(origins = "http://localhost:5173")
 public class JobController {
 
     private final JobService jobService;
@@ -16,8 +17,15 @@ public class JobController {
         this.jobService = jobService;
     }
 
+    // 🔥 Show 10 internships
     @GetMapping
-    public List<Job> getAllJobs() {
-        return jobService.getAllJobs();
+    public List<Job> getLatestJobs() {
+        return jobService.getLatestJobs();
+    }
+
+    // 🔥 Click internship → details
+    @GetMapping("/{id}")
+    public Job getJob(@PathVariable int id) {
+        return jobService.getJobById(id);
     }
 }

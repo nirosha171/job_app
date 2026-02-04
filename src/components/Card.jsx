@@ -1,3 +1,7 @@
 export default function Card({ children }) {
-  return <div className="card">{children}</div>;
+  return (
+    <div style={{ padding: "20px", margin: "20px", background: "#fff" }}>
+      {children}
+    </div>
+  );
 }

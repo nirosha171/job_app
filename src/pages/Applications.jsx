@@ -6,37 +6,18 @@ export default function Applications() {
   const [apps, setApps] = useState([]);
 
   useEffect(() => {
-    const fetchApplications = async () => {
-      try {
-        const res = await api.get("/applications");
-        setApps(res.data);
-      } catch (err) {
-        console.error("Failed to fetch applications:", err);
-      }
-    };
-    fetchApplications();
+    api.get("/applications").then(res => setApps(res.data));
   }, []);
 
   return (
     <>
-      <h2>Job Applications</h2>
-      {apps.length === 0 ? (
-        <p>No applications found.</p>
-      ) : (
-        apps.map((a) => (
-          <Card key={a.applicationId || a.id}>
-            <p>
-              <b>Student ID:</b> {a.studentId}
-            </p>
-            <p>
-              <b>Job ID:</b> {a.jobId}
-            </p>
-            <p>
-              <b>Status:</b> {a.status}
-            </p>
-          </Card>
-        ))
-      )}
+      <h2>Applications</h2>
+      {apps.map((a, i) => (
+        <Card key={i}>
+          <p>Student: {a.studentId}</p>
+          <p>Status: {a.status || "Pending"}</p>
+        </Card>
+      ))}
     </>
   );
 }

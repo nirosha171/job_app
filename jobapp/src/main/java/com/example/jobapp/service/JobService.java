@@ -15,7 +15,11 @@ public class JobService {
         this.jobRepository = jobRepository;
     }
 
-    public List<Job> getAllJobs() {
-        return jobRepository.findAll();
+    public List<Job> getLatestJobs() {
+        return jobRepository.findTop10ByOrderByIdDesc();
+    }
+
+    public Job getJobById(int id) {
+        return jobRepository.findById(id).orElse(null);
     }
 }
