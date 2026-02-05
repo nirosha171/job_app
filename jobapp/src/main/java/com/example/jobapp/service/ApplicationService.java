@@ -15,7 +15,7 @@ public class ApplicationService {
     }
 
     public void apply(JobApplication application) {
-        repository.save(application);  // ✅ must save to DB
+        repository.save(application);  
     }
 
     public List<JobApplication> getApplications() {

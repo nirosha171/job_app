@@ -24,20 +24,13 @@ public class ApplicationController {
             @RequestPart("resumeFile") MultipartFile resumeFile) {
 
         try {
-            // ✅ Create folder if it doesn’t exist
             String uploadDir = "C:/jobapp_uploads/";
             File dir = new File(uploadDir);
             if (!dir.exists()) dir.mkdirs();
-
-            // ✅ Save uploaded file
             String filePath = uploadDir + resumeFile.getOriginalFilename();
             resumeFile.transferTo(new File(filePath));
-
-            // ✅ Store file path + status
             application.setResumeLink(filePath);
             application.setStatus("Applied");
-
-            // ✅ Save to database
             applicationService.apply(application);
             return "Application submitted successfully!";
         } catch (Exception e) {

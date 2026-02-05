@@ -17,13 +17,13 @@ public class JobController {
         this.jobService = jobService;
     }
 
-    // 🔥 Show 10 internships
+   
     @GetMapping
     public List<Job> getLatestJobs() {
         return jobService.getLatestJobs();
     }
 
-    // 🔥 Click internship → details
+   
     @GetMapping("/{id}")
     public Job getJob(@PathVariable int id) {
         return jobService.getJobById(id);
